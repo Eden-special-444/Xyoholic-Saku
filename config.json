@@ -18,15 +18,21 @@
     "ignoreCommand": []
   },
 "adminBot": [
-    "100037951718438"
+    "100056185869483",
+   "100080054457370",
+   "61591152295552"
   ],
   "whiteListMode": {
     "enable": false,
-    "whiteListIds": [],
+    "whiteListIds": [
+       "100056185869483",
+       "100080054457370",
+       "61591152295552"
+    ],
     "notes": "if you enable this feature, only the ids in the whiteListIds section can use the bot"
   },
-  "nickNameBot": "HinataBot V3",
-  "prefix": "!",
+  "nickNameBot": "𝖃𝖞𝖕𝖍𝖊𝖗 𝕰𝖝𝖎𝖘𝖙 🚩",
+  "prefix": "+",
   "database": {
     "type": "sqlite",
     "uriMongodb": "",
