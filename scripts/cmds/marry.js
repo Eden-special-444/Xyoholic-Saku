@@ -20,27 +20,41 @@ module.exports = {
 		try {
 			console.log("Body:", event.body);
 			console.log("Mentions:", event.mentions);
+			console.log("Message Reply:", event.messageReply);
 
-			// Fix: Check if mentions exists and is an object
-			const mentions = event.mentions || {};
-			const mention = Object.keys(mentions);
+			let two;
 
-			if (!mention.length) {
-				return message.reply("Please mention someone❗");
+			// Method 1: Check event.mentions first
+			if (event.mentions && Object.keys(event.mentions).length > 0) {
+				two = Object.keys(event.mentions)[0];
+			}
+			// Method 2: Parse from body text
+			else {
+				const body = event.body || "";
+				const mentionMatch = body.match(/@(\d+)/);
+				if (mentionMatch) {
+					two = mentionMatch[1];
+				}
+			}
+			// Method 3: Check if replying to someone
+			if (!two && event.messageReply && event.messageReply.senderID) {
+				two = event.messageReply.senderID;
+			}
+
+			if (!two) {
+				return message.reply("দয়া করে কাউকে মেনশন করুন ❗");
 			}
 
 			const one = event.senderID;
-			const two = mention[0];
 
-			// Check if the mentioned ID is valid
-			if (!two || two === one) {
-				return message.reply("Please mention someone else ❗");
+			if (two === one) {
+				return message.reply("নিজেকে মেনশন করা যাবে না ❗");
 			}
 
 			const ptth = await bal(one, two);
 
 			return message.reply({
-				body: "got married 😍",
+				body: "বিয়ে হয়ে গেছে 😍",
 				attachment: fs.createReadStream(ptth)
 			});
 		} catch (err) {
